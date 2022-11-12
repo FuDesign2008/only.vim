@@ -32,7 +32,7 @@ function s:LayoutWindows(isOnly, columns)
         return
     endif
 
-    let l:count = 0
+    let l:count = 1
     while l:count < l:columnTotal
         execute 'vsplit'
         let l:count = l:count + 1
@@ -43,16 +43,18 @@ function s:LayoutWindows(isOnly, columns)
 endfunction
 
 
-function s:Only()
-    if len(a:000) == 0
+"@params {number|string} columns
+function! s:Only(...)
+    if a:0 == 0
         call s:LayoutWindows(1, 1)
     else
         call s:LayoutWindows(1, a:1)
     endif
 endfunction
 
-function s:Layout()
-    if len(a:000) == 0
+"@params {number|string} columns
+function! s:Layout(...)
+    if a:0 == 0
         call s:LayoutWindows(0, 1)
     else
         call s:LayoutWindows(0, a:1)
@@ -63,7 +65,7 @@ endfunction
 
 
 
-command -nargs=? Only call s:Only()
-command -nargs=? Layout call s:Layout()
+command! -nargs=? Only call s:Only(<f-args>)
+command! -nargs=? Layout call s:Layout(<f-args>)
 
 let &cpoptions = s:save_cpo
