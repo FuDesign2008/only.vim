@@ -245,7 +245,8 @@ function! EditFileComplete(A, L, P)
     let files = s:GetFiles(folder)
 
     if length == 0
-        return files
+        let pathList = mapnew(files, {index, item -> item.path})
+        return pathList
     else
         let matchFiles = []
         for item in files
