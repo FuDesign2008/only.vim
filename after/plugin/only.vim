@@ -53,7 +53,7 @@ function! s:Only(...)
 endfunction
 
 "@params {number|string} columns
-function! s:Layout(...)
+function! s:OnlyWin(...)
     if a:0 == 0
         call s:LayoutWindows(0, 1)
     else
@@ -62,10 +62,7 @@ function! s:Layout(...)
 endfunction
 
 
-
-
-
 command! -nargs=? Only call s:Only(<f-args>)
-command! -nargs=? Layout call s:Layout(<f-args>)
+command! -nargs=? OnlyWin call s:OnlyWin(<f-args>)
 
 let &cpoptions = s:save_cpo

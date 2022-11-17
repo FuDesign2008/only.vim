@@ -1,15 +1,21 @@
 # only.vim
 
-Layout windows quickly
+Enhance vim native commands
 
 ## Commands
 
-### 1. `Layout`
+### 1. `Only`
 
--   `Layout` : only keep 1 window in current tab
--   `Layout n`: only keep n vertical windows in current tab
-
-### 2. `Only`
+Inspired by `:only` command
 
 -   `Only` : only keep 1 window in current tab and close others tabs
 -   `Only n`: only keep n vertical windows in current tab and close others tabs
+-   `OnlyWin ` : like `Only`, but not close others tabs
+-   `OnlyWin n`: like `Only n`, but not close others tabs
+
+### 2. `E`
+
+Inspired by `:e` command
+
+-   `E`: edit the folder that contains current file
+-   `E fileName`: edit the file that is relative with current file, support fuzzy find
