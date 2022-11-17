@@ -91,6 +91,10 @@ endfunction
 
 "@param {string} result
 "@return {array}
+"@interface FileItem{
+"   name: string
+"   path: string
+"}
 function! s:ParseToFiles(result)
     let resultList = split(a:result, '\n')
 
@@ -227,11 +231,31 @@ function! s:RelativeEdit(...)
 endfunction
 
 
+" function! EditFileComplete(A, L, P)
+    " let modes = extend(['dark', 'light'], s:favoriteColorThemeNames)
+    " let trimed = trim(a:A)
+    " let length = len(trimed)
+
+    " if length == 0
+        " return modes
+    " else
+        " let matchModes = []
+        " for item in modes
+            " if stridx(item, trimed) > -1 && len(item) > length
+                " call add(matchModes, item)
+            " endif
+        " endfor
+        " return matchModes
+    " endif
+" endfunction
+
+
+
 
 
 command! -nargs=? Only call s:Only(<f-args>)
 command! -nargs=? OnlyWin call s:OnlyWin(<f-args>)
 " :E {fileName}
-command! -nargs=? -complete=file E call s:RelativeEdit(<f-args>)
+command! -nargs=? -complete=file_in_path E call s:RelativeEdit(<f-args>)
 
 let &cpoptions = s:save_cpo
