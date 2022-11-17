@@ -222,7 +222,7 @@ function! s:RelativeEdit(...)
             if empty(foundFilePath)
                 let dirBaseCurrentFile = expand('%:h')
                 let newFilePath = dirBaseCurrentFile . '/' . fileName
-                execute ':e' . newFilePath
+                execute ':e ' . newFilePath
             else
                 execute ':e ' . foundFilePath
             endif
