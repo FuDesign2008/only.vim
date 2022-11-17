@@ -169,14 +169,20 @@ function! s:FuzzyFind(files, fileName)
     return get(first, 'path', '')
 endfunction
 
+"@param {string} baseFolder
+"@return {FileItem[]}
+function! s:GetFiles(baseFolder)
+    let shellCmd = 'cd ' . shellescape(a:baseFolder) . ' && ls -R'
+    let result = system(shellCmd)
+    let files = s:ParseToFiles(result)
+    return files
+endfunction
+
 
 "@param {string} fileName
 "@return {string}
 function! s:FuzzyFindFile(baseFolder, fileName)
-    let shellCmd = 'cd ' . shellescape(a:baseFolder) . ' && ls -R'
-    let result = system(shellCmd)
-    let files = s:ParseToFiles(result)
-
+    let files = s:GetFiles(a:baseFolder)
     let found = s:FuzzyFind(files, a:fileName)
     return found
 endfunction
@@ -231,23 +237,25 @@ function! s:RelativeEdit(...)
 endfunction
 
 
-" function! EditFileComplete(A, L, P)
-    " let modes = extend(['dark', 'light'], s:favoriteColorThemeNames)
-    " let trimed = trim(a:A)
-    " let length = len(trimed)
+function! EditFileComplete(A, L, P)
+    let trimed = trim(a:A)
+    let length = len(trimed)
 
-    " if length == 0
-        " return modes
-    " else
-        " let matchModes = []
-        " for item in modes
-            " if stridx(item, trimed) > -1 && len(item) > length
-                " call add(matchModes, item)
-            " endif
-        " endfor
-        " return matchModes
-    " endif
-" endfunction
+    let folder = expand('%:p:h')
+    let files = s:GetFiles(folder)
+
+    if length == 0
+        return files
+    else
+        let matchFiles = []
+        for item in files
+            if stridx(item.path, trimed) > -1 && len(item.path) > length
+                call add(matchFiles, item.path)
+            endif
+        endfor
+        return matchFiles
+    endif
+endfunction
 
 
 
@@ -256,6 +264,6 @@ endfunction
 command! -nargs=? Only call s:Only(<f-args>)
 command! -nargs=? OnlyWin call s:OnlyWin(<f-args>)
 " :E {fileName}
-command! -nargs=? -complete=file_in_path E call s:RelativeEdit(<f-args>)
+command! -nargs=? -complete=customlist,EditFileComplete E call s:RelativeEdit(<f-args>)
 
 let &cpoptions = s:save_cpo
