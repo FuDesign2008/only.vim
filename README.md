@@ -18,4 +18,4 @@ Inspired by `:only` command
 Inspired by `:e` command
 
 -   `E`: edit the folder that contains current file
--   `E fileName`: edit the file that is relative with current file, support fuzzy find
+-   `E fileName`: edit/create the file that is relative with current file, support fuzzy find

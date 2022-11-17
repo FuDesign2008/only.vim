@@ -209,14 +209,6 @@ function! s:FindFileRelative(fileName)
 endfunction
 
 
-function! s:EditFile(filePath)
-    if filereadable(a:filePath) || isdirectory(a:filePath)
-        execute ':e ' . a:filePath
-    else
-        echoerr 'Failed to find file: ' . a:filePath
-    endif
-endfunction
-
 function! s:RelativeEdit(...)
     let argsCount = a:0
     if argsCount == 0
@@ -226,11 +218,13 @@ function! s:RelativeEdit(...)
         if fileName ==# '.'
             call s:EditFolder(1)
         else
-            let filePath = s:FindFileRelative(fileName)
-            if empty(filePath)
-                call s:EditFolder(1)
+            let foundFilePath = s:FindFileRelative(fileName)
+            if empty(foundFilePath)
+                let dirBaseCurrentFile = expand('%:h')
+                let newFilePath = dirBaseCurrentFile . '/' . fileName
+                execute ':e' . newFilePath
             else
-                call s:EditFile(filePath)
+                execute ':e ' . foundFilePath
             endif
         endif
     endif
