@@ -1,5 +1,5 @@
 
-if &compatible || exists(':E')
+if &compatible || exists(':E') == 2
     finish
 endif
 let s:save_cpo = &cpoptions

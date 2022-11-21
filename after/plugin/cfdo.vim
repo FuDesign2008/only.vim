@@ -1,4 +1,4 @@
-if &compatible || exists(':Cfdo')
+if &compatible || exists(':Cfdo') == 2
     finish
 endif
 let s:save_cpo = &cpoptions

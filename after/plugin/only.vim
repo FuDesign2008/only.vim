@@ -1,5 +1,5 @@
 
-if &compatible || exists(':Only')
+if &compatible || exists(':Only') == 2
     finish
 endif
 let s:save_cpo = &cpoptions
